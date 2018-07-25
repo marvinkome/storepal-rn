@@ -11,9 +11,12 @@ type Props = {
 const TopBar = ({ pageTitle }: Props) => {
     return (
         <Header
-            centerComponent={{
-                text: pageTitle.toUpperCase(),
-                style: styles.text,
+            leftComponent={
+                <Text style={styles.text}>{pageTitle.toUpperCase()}</Text>
+            }
+            rightComponent={{
+                icon: 'search',
+                style: styles.icon,
             }}
             outerContainerStyles={styles.header}
             statusBarProps={{

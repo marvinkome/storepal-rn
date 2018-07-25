@@ -20,5 +20,6 @@ export default createBottomTabNavigator(
             activeTintColor: color.dark,
             inactiveTintColor: color.light,
         },
+        initialRouteName: 'Products',
     },
 );
