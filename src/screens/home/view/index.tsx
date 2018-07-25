@@ -1,17 +1,14 @@
 import * as React from 'react';
 import { View, Text } from 'react-native';
+import { viewStyles as styles } from './styles';
+import Card from './cards';
 
 export default class ScreenView extends React.Component {
     render() {
         return (
-            <View
-                style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
-            >
-                <Text>Hello from Home view</Text>
+            <View style={styles.container}>
+                <Card type="sales" />
+                <Card type="purchase" />
             </View>
         );
     }
