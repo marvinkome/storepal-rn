@@ -11,7 +11,4 @@ export default StyleSheet.create({
         fontSize: 17,
         fontWeight: '500',
     },
-    icon: {
-        color: color.normal,
-    },
 });

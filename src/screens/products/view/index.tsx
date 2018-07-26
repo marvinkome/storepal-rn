@@ -2,6 +2,7 @@ import * as React from 'react';
 import { View, Text } from 'react-native';
 
 import Listing from '../../../components/listings';
+import SearchBar from '../../../components/searchBar';
 import { viewStyles as styles } from './styles';
 
 export default class ScreenView extends React.Component {
@@ -22,6 +23,7 @@ export default class ScreenView extends React.Component {
         ];
         return (
             <View style={styles.background}>
+                <SearchBar placeholder="Search products..." />
                 <Listing
                     items={productData}
                     rightButton={{ title: 'Edit', onPress: () => null }}

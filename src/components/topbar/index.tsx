@@ -9,20 +9,21 @@ type Props = {
 };
 
 const TopBar = ({ pageTitle }: Props) => {
+    const centerComponent = {
+        text: pageTitle.toUpperCase(),
+        style: styles.text,
+    };
+
+    const statusBarProps = {
+        backgroundColor: color.light,
+        translucent: true,
+    };
+
     return (
         <Header
-            leftComponent={
-                <Text style={styles.text}>{pageTitle.toUpperCase()}</Text>
-            }
-            rightComponent={{
-                icon: 'search',
-                style: styles.icon,
-            }}
+            centerComponent={centerComponent}
             outerContainerStyles={styles.header}
-            statusBarProps={{
-                backgroundColor: color.light,
-                translucent: true,
-            }}
+            statusBarProps={statusBarProps}
         />
     );
 };
