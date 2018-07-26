@@ -1,25 +1,55 @@
 import * as React from 'react';
-import { createBottomTabNavigator } from 'react-navigation';
+import { Icon } from 'react-native-elements';
+import {
+    createBottomTabNavigator,
+    createStackNavigator
+} from 'react-navigation';
 
 import Home from './screens/home';
 import Products from './screens/products';
 import Creditors from './screens/creditors';
 import Records from './screens/records';
+import NewSale from './screens/newSale';
 
 import { color } from './constants';
 
 export default createBottomTabNavigator(
     {
-        Home,
+        Home: {
+            screen: createStackNavigator(
+                {
+                    Home,
+                    NewSale
+                },
+                {
+                    initialRouteName: 'NewSale'
+                }
+            )
+        },
         Products,
         Creditors,
-        Records,
+        Records
     },
     {
+        navigationOptions: ({ navigation }) => ({
+            tabBarIcon: ({ focused, tintColor }) => {
+                const { routeName } = navigation.state;
+                if (routeName === 'Home') {
+                    const iconName = `ios-home${focused ? '' : '-outline'}`;
+                    return (
+                        <Icon
+                            name={iconName}
+                            type="ionicon"
+                            color={tintColor || ''}
+                        />
+                    );
+                }
+                return null;
+            }
+        }),
         tabBarOptions: {
             activeTintColor: color.dark,
-            inactiveTintColor: color.light,
-        },
-        initialRouteName: 'Records',
-    },
+            inactiveTintColor: color.light
+        }
+    }
 );
