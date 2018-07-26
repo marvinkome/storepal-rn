@@ -1,6 +1,9 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 import { Icon } from 'react-native-elements';
+
+import ScreenWrapper from '../../components/appWrapper';
+import View from './view';
 
 export default class Creditors extends React.Component {
     static navigationOptions = () => ({
@@ -14,19 +17,9 @@ export default class Creditors extends React.Component {
             const iconName = `ios-contact${focused ? '' : '-outline'}`;
             return <Icon name={iconName} type="ionicon" color={tintColor} />;
         },
-    })
+    });
 
     render() {
-        return (
-            <View
-                style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
-            >
-                <Text>Hello from Creditors</Text>
-            </View>
-        );
+        return <ScreenWrapper title="Creditors" render={<View />} />;
     }
 }

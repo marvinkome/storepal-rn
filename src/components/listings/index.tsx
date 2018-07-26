@@ -7,16 +7,35 @@ type Prop = {
     items: Array<{
         id: string;
         name: string;
-        price?: number;
-        quantity?: number;
+        price: number;
+        quantity: number;
     }>;
     rightButton?: {
         title: string;
         onPress: () => void;
     };
+    creditors?: boolean;
 };
 
-export const Listing = ({ items, rightButton }: Prop) => {
+const ShowSubtitle = (item: {
+    creditors?: boolean;
+    price: number;
+    quantity: number;
+}) => {
+    return item.creditors ? (
+        <React.Fragment>
+            <Text>Qwing: ${item.price}</Text>
+            <Text style={styles.quantityText}>Items: {item.quantity}</Text>
+        </React.Fragment>
+    ) : (
+        <React.Fragment>
+            <Text>Price: ${item.price}</Text>
+            <Text style={styles.quantityText}>Qty: {item.quantity}</Text>
+        </React.Fragment>
+    );
+};
+
+export const Listing = ({ items, rightButton, creditors }: Prop) => {
     return (
         <List containerStyle={styles.container}>
             {items.map((item) => {
@@ -39,14 +58,11 @@ export const Listing = ({ items, rightButton }: Prop) => {
                         }
                         subtitle={
                             <View style={styles.subtitleContainer}>
-                                {item.price && (
-                                    <Text>Price: ${item.price}</Text>
-                                )}
-                                {item.quantity && (
-                                    <Text style={styles.quantityText}>
-                                        Qty: {item.quantity}
-                                    </Text>
-                                )}
+                                <ShowSubtitle
+                                    creditors={creditors}
+                                    price={item.price}
+                                    quantity={item.quantity}
+                                />
                             </View>
                         }
                     />

@@ -12,7 +12,9 @@
         "ordered-imports": false,
         "max-classes-per-file": false,
         "semicolon": [true, "always", "ignore-bound-class-methods"],
-        "trailing-comma": false
+        "trailing-comma": false,
+        "jsx-no-multiline-js": false,
+        "jsx-curly-spacing": false
     },
     "rulesDirectory": []
 }
