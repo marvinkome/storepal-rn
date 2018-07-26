@@ -16,6 +16,7 @@ const ViewCard = ({ type }: Props) => {
         type: 'feather',
         style: styles.buttonText,
     };
+    const onPress = () => null;
 
     return (
         <Card
@@ -30,7 +31,7 @@ const ViewCard = ({ type }: Props) => {
                 <Button
                     title={'ADD NEW'}
                     iconRight={buttonRight}
-                    onPress={() => null}
+                    onPress={onPress}
                     buttonStyle={styles.button}
                     textStyle={styles.buttonText}
                 />

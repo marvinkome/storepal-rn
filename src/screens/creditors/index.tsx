@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Text } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import ScreenWrapper from '../../components/appWrapper';

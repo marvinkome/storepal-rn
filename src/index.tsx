@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from 'react-navigation';
 import Home from './screens/home';
 import Products from './screens/products';
 import Creditors from './screens/creditors';
-import Registry from './screens/registry';
+import Records from './screens/records';
 
 import { color } from './constants';
 
@@ -13,13 +13,13 @@ export default createBottomTabNavigator(
         Home,
         Products,
         Creditors,
-        Registry,
+        Records,
     },
     {
         tabBarOptions: {
             activeTintColor: color.dark,
             inactiveTintColor: color.light,
         },
-        initialRouteName: 'Creditors',
+        initialRouteName: 'Records',
     },
 );

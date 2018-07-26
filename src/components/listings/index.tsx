@@ -24,8 +24,8 @@ const ShowSubtitle = (item: {
 }) => {
     return item.creditors ? (
         <React.Fragment>
-            <Text>Qwing: ${item.price}</Text>
-            <Text style={styles.quantityText}>Items: {item.quantity}</Text>
+            <Text>Items: {item.quantity}</Text>
+            <Text style={styles.quantityText}>Owing: ${item.price}</Text>
         </React.Fragment>
     ) : (
         <React.Fragment>
