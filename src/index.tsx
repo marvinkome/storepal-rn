@@ -10,21 +10,18 @@ import Products from './screens/products';
 import Creditors from './screens/creditors';
 import Records from './screens/records';
 import NewSale from './screens/newSale';
+import NewProduct from './screens/newProduct';
 
 import { color } from './constants';
 
 export default createBottomTabNavigator(
     {
         Home: {
-            screen: createStackNavigator(
-                {
-                    Home,
-                    NewSale
-                },
-                {
-                    initialRouteName: 'NewSale'
-                }
-            )
+            screen: createStackNavigator({
+                Home,
+                NewSale,
+                NewProduct
+            })
         },
         Products,
         Creditors,
