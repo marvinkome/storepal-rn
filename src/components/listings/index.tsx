@@ -8,34 +8,46 @@ type Prop = {
         id: string;
         name: string;
         price: number;
-        quantity: number;
+        quantity?: number;
+        date?: string;
     }>;
     rightButton?: {
         title: string;
         onPress: () => void;
     };
-    creditors?: boolean;
+    type: 'product' | 'creditor' | 'creditor-item';
 };
 
 const ShowSubtitle = (item: {
-    creditors?: boolean;
+    type: 'product' | 'creditor' | 'creditor-item';
     price: number;
-    quantity: number;
+    quantity?: number;
+    date?: string;
 }) => {
-    return item.creditors ? (
-        <React.Fragment>
-            <Text>Items: {item.quantity}</Text>
-            <Text style={styles.quantityText}>Owing: ${item.price}</Text>
-        </React.Fragment>
-    ) : (
-        <React.Fragment>
-            <Text>Price: ${item.price}</Text>
-            <Text style={styles.quantityText}>Qty: {item.quantity}</Text>
-        </React.Fragment>
-    );
+    if (item.type === 'product') {
+        return (
+            <React.Fragment>
+                <Text>Price: ${item.price}</Text>
+                <Text style={styles.quantityText}>Qty: {item.quantity}</Text>
+            </React.Fragment>
+        );
+    } else if (item.type === 'creditor') {
+        return (
+            <React.Fragment>
+                <Text>Items: {item.quantity}</Text>
+                <Text style={styles.quantityText}>Owing: ${item.price}</Text>
+            </React.Fragment>
+        );
+    } else {
+        return (
+            <React.Fragment>
+                <Text>Owing: ${item.price}</Text>
+            </React.Fragment>
+        );
+    }
 };
 
-export const Listing = ({ items, rightButton, creditors }: Prop) => {
+export const Listing = ({ items, rightButton, type }: Prop) => {
     return (
         <List containerStyle={styles.container}>
             {items.map((item) => {
@@ -59,9 +71,10 @@ export const Listing = ({ items, rightButton, creditors }: Prop) => {
                         subtitle={
                             <View style={styles.subtitleContainer}>
                                 <ShowSubtitle
-                                    creditors={creditors}
+                                    type={type}
                                     price={item.price}
                                     quantity={item.quantity}
+                                    date={item.date}
                                 />
                             </View>
                         }

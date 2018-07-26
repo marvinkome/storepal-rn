@@ -12,14 +12,14 @@ export default class ScreenView extends React.Component {
                 name: 'Rachel Smith',
                 id: '0',
                 price: 100,
-                quantity: 2,
+                quantity: 2
             },
             {
                 name: 'John Doe',
                 id: '1',
                 price: 10,
-                quantity: 4,
-            },
+                quantity: 4
+            }
         ];
         return (
             <View style={styles.background}>
@@ -27,7 +27,7 @@ export default class ScreenView extends React.Component {
                 <Listing
                     items={productData}
                     rightButton={{ title: 'View Items', onPress: () => null }}
-                    creditors={true}
+                    type="creditor"
                 />
             </View>
         );
