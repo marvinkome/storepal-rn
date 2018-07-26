@@ -6,17 +6,17 @@ import { cardStyles as styles } from './styles';
 
 type Props = {
     type: 'purchase' | 'sales';
+    onPress: () => void;
 };
 
-const ViewCard = ({ type }: Props) => {
+const ViewCard = ({ type, onPress }: Props) => {
     const icon = type === 'sales' ? 'ios-cash' : 'truck-delivery';
     const iconType = type === 'sales' ? 'ionicon' : 'material-community';
     const buttonRight = {
         name: 'plus',
         type: 'feather',
-        style: styles.buttonText,
+        style: styles.buttonText
     };
-    const onPress = () => null;
 
     return (
         <Card

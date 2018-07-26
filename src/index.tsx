@@ -28,14 +28,11 @@ export default createBottomTabNavigator(
             Products,
             EditProduct
         }),
-        Creditors: createStackNavigator(
-            {
-                Creditors,
-                CreditorItem,
-                PayDebt
-            },
-            { initialRouteName: 'PayDebt' }
-        ),
+        Creditors: createStackNavigator({
+            Creditors,
+            CreditorItem,
+            PayDebt
+        }),
         Records
     },
     {
@@ -80,7 +77,6 @@ export default createBottomTabNavigator(
         tabBarOptions: {
             activeTintColor: color.dark,
             inactiveTintColor: color.light
-        },
-        initialRouteName: 'Creditors'
+        }
     }
 );

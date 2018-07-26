@@ -10,6 +10,7 @@ export default class Products extends React.Component {
     };
 
     render() {
+        // @ts-ignore
         return <ScreenWrapper title="Products" render={<View />} />;
     }
 }

@@ -10,6 +10,7 @@ export default class Creditors extends React.Component {
     };
 
     render() {
+        // @ts-ignore
         return <ScreenWrapper title="Creditors" render={<View />} />;
     }
 }

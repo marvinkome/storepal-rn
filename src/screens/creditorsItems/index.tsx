@@ -11,6 +11,7 @@ export default class Products extends React.Component {
     };
 
     render() {
+        // @ts-ignore
         return <ScreenWrapper title="Creditors Item" render={<View />} />;
     }
 }

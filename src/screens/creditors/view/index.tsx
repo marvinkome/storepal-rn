@@ -1,11 +1,15 @@
 import * as React from 'react';
+import { withNavigation, NavigationInjectedProps } from 'react-navigation';
 import { View, Text } from 'react-native';
 
 import Listing from '../../../components/listings';
 import SearchBar from '../../../components/searchBar';
 import { viewStyles as styles } from './styles';
 
-export default class ScreenView extends React.Component {
+class ScreenView extends React.Component<NavigationInjectedProps> {
+    goToCreditorsItemsPage = () => {
+        this.props.navigation.navigate('CreditorItem');
+    };
     render() {
         const productData = [
             {
@@ -26,10 +30,15 @@ export default class ScreenView extends React.Component {
                 <SearchBar placeholder="Search creditors..." />
                 <Listing
                     items={productData}
-                    rightButton={{ title: 'View Items', onPress: () => null }}
+                    rightButton={{
+                        title: 'View Items',
+                        onPress: this.goToCreditorsItemsPage
+                    }}
                     type="creditor"
                 />
             </View>
         );
     }
 }
+
+export default withNavigation(ScreenView);

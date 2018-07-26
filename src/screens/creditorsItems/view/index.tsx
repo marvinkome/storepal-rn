@@ -1,10 +1,14 @@
 import * as React from 'react';
+import { withNavigation, NavigationInjectedProps } from 'react-navigation';
 import { View, Text } from 'react-native';
 
 import Listing from '../../../components/listings';
 import { viewStyles as styles } from './styles';
 
-export default class ScreenView extends React.Component {
+class ScreenView extends React.Component<NavigationInjectedProps> {
+    goToPayDebtsPage = () => {
+        this.props.navigation.navigate('PayDebt');
+    };
     render() {
         const productData = [
             {
@@ -22,10 +26,15 @@ export default class ScreenView extends React.Component {
             <View style={styles.background}>
                 <Listing
                     items={productData}
-                    rightButton={{ title: 'Paid', onPress: () => null }}
+                    rightButton={{
+                        title: 'Paid',
+                        onPress: this.goToPayDebtsPage
+                    }}
                     type="creditor-item"
                 />
             </View>
         );
     }
 }
+
+export default withNavigation(ScreenView);
