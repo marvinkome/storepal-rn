@@ -11,6 +11,7 @@ import Creditors from './screens/creditors';
 import Records from './screens/records';
 import NewSale from './screens/newSale';
 import NewProduct from './screens/newProduct';
+import EditProduct from './screens/editProduct';
 
 import { color } from './constants';
 
@@ -23,7 +24,17 @@ export default createBottomTabNavigator(
                 NewProduct
             })
         },
-        Products,
+        Products: {
+            screen: createStackNavigator(
+                {
+                    Products,
+                    EditProduct
+                },
+                {
+                    initialRouteName: 'EditProduct'
+                }
+            )
+        },
         Creditors,
         Records
     },
@@ -41,12 +52,24 @@ export default createBottomTabNavigator(
                         />
                     );
                 }
+
+                if (routeName === 'Products') {
+                    const iconName = `ios-cart${focused ? '' : '-outline'}`;
+                    return (
+                        <Icon
+                            name={iconName}
+                            type="ionicon"
+                            color={tintColor || ''}
+                        />
+                    );
+                }
                 return null;
             }
         }),
         tabBarOptions: {
             activeTintColor: color.dark,
             inactiveTintColor: color.light
-        }
+        },
+        initialRouteName: 'Products'
     }
 );
