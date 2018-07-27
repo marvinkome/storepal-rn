@@ -4,11 +4,11 @@ import { color } from '../../constants';
 export default StyleSheet.create({
     header: {
         backgroundColor: '#fff',
-        marginTop: 10,
+        marginTop: 5
     },
     text: {
         color: color.normal,
         fontSize: 17,
-        fontWeight: '500',
-    },
+        fontWeight: '500'
+    }
 });

@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { Text } from 'react-native-elements';
 
-import ScreenWrapper from '../../components/appWrapper';
+import { getHeaderSettings } from '../../lib/helpers';
 import View from './view';
 
 export default class NewProduct extends React.Component {
-    static navigationOptions = {
-        header: null
-    };
-
+    static navigationOptions = getHeaderSettings('add new product');
     render() {
-        return <ScreenWrapper title="Add New Product" render={<View />} />;
+        return <View />;
     }
 }

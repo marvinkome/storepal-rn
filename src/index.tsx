@@ -1,9 +1,13 @@
 import * as React from 'react';
+import { StatusBar, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import {
     createBottomTabNavigator,
     createStackNavigator
 } from 'react-navigation';
+import { Provider } from 'react-redux';
+
+import store from './store';
 
 import Home from './screens/home';
 import Products from './screens/products';
@@ -17,7 +21,7 @@ import PayDebt from './screens/payDebts';
 
 import { color } from './constants';
 
-export default createBottomTabNavigator(
+const Navigation = createBottomTabNavigator(
     {
         Home: createStackNavigator({
             Home,
@@ -80,3 +84,14 @@ export default createBottomTabNavigator(
         }
     }
 );
+
+const App = () => (
+    <Provider store={store}>
+        <View style={{ flex: 1 }}>
+            <StatusBar backgroundColor={color.light} translucent={true} />
+            <Navigation />
+        </View>
+    </Provider>
+);
+
+export default App;
