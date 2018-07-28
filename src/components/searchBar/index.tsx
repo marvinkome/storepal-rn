@@ -3,12 +3,12 @@ import { SearchBar } from 'react-native-elements';
 import { search as styles } from './styles';
 
 type props = {
-    onClear: () => void;
+    value: string;
     onChange: (text: string) => void;
     placeholder?: string;
 };
 
-const Search = ({ placeholder, onChange, onClear }: props) => {
+const Search = ({ placeholder, onChange, value }: props) => {
     return (
         <SearchBar
             containerStyle={styles.container}
@@ -17,7 +17,7 @@ const Search = ({ placeholder, onChange, onClear }: props) => {
             lightTheme={true}
             placeholder={placeholder || 'Search...'}
             onChangeText={onChange}
-            onClearText={onClear}
+            value={value}
         />
     );
 };

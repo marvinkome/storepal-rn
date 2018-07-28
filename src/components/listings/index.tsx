@@ -13,7 +13,7 @@ type Prop = {
     }>;
     rightButton?: {
         title: string;
-        onPress: () => void;
+        onPress: (id: string) => void;
     };
     type: 'product' | 'creditor' | 'creditor-item';
 };
@@ -59,7 +59,7 @@ export const Listing = ({ items, rightButton, type }: Prop) => {
                         rightButton ? (
                             <Button
                                 title={rightButton.title}
-                                onPress={rightButton.onPress}
+                                onPress={() => rightButton.onPress(item.id)}
                                 buttonStyle={styles.editButton}
                                 textStyle={styles.editButtonText}
                             />

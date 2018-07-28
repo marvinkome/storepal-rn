@@ -8,7 +8,10 @@ const logger = (state: any) => (next: any) => (action: any) => {
     return result;
 };
 
-// @ts-ignore
-const store = createStore(reducer, applyMiddleware(logger));
+const store = createStore(
+    // @ts-ignore
+    reducer
+    // applyMiddleware(logger)
+);
 
 export default store;

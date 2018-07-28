@@ -1,6 +1,6 @@
 import { Creditors } from './../dataTypes';
 import { Store, Products, Sales } from '../dataTypes';
-import { ADD_PRODUCT, SELL_PRODUCT } from './actionsTypes';
+import { ADD_PRODUCT, SELL_PRODUCT, EDIT_PRODUCT } from './actionsTypes';
 import initState from './initState';
 
 const updateItemInArray = (
@@ -27,6 +27,27 @@ function addProductToStore(store: Store, payload: Products): Store {
         ...store,
         products
     };
+}
+
+function editProductInStore(
+    store: Store,
+    payload: { id: string; name: string; price: number }
+): Store {
+    const products = updateItemInArray(
+        store.products,
+        payload.id,
+        (item: Products): Products => ({
+            ...item,
+            ...payload
+        })
+    );
+
+    const newStore = {
+        ...store,
+        products
+    };
+
+    return newStore;
 }
 
 function sellProductReducer(store: Store, payload: Sales): Store {
@@ -113,6 +134,8 @@ const rootReducer = (state = initState, action: actionType) => {
     switch (action.type) {
         case ADD_PRODUCT:
             return addProductToStore(state, action.payload);
+        case EDIT_PRODUCT:
+            return editProductInStore(state, action.payload);
         case SELL_PRODUCT:
             return sellProductReducer(state, action.payload);
         default:

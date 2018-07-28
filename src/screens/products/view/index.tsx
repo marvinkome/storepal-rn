@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavigationInjectedProps, withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
-import { View, Text } from 'react-native';
+import { View, Text, ToastAndroid } from 'react-native';
 
 import { Products } from '../../../dataTypes';
 import Listing from '../../../components/listings';
@@ -13,6 +13,7 @@ type Props = {
 };
 
 type State = {
+    searchText: string;
     products: Products[];
 };
 
@@ -24,43 +25,49 @@ class ScreenView extends React.Component<
         super(props);
 
         this.state = {
+            searchText: '',
             products: props.products
         };
     }
+
     onSearchChange = (text: string) => {
-        const { products } = this.props;
-
-        if (text.length) {
-            // filter products
-            const newProducts = products.filter(
-                (product) => product.name.toLowerCase() === text.toLowerCase()
-            );
-
-            this.setState({
-                products: newProducts
-            });
-        } else {
-            this.setState({
-                products
-            });
-        }
-    };
-    onClearText = () => {
         this.setState({
-            products: this.props.products
+            searchText: text
         });
     };
-    goToEditProductPage = () => {
-        this.props.navigation.navigate('EditProduct');
+
+    filterForSearch = (data: Products[], text: string) => {
+        if (text.length) {
+            // filter products
+            return data.filter(
+                (product) => product.name.toLowerCase() === text.toLowerCase()
+            );
+        } else {
+            return data;
+        }
     };
+
+    goToEditProductPage = (id: string) => {
+        this.setState({
+            searchText: ''
+        });
+
+        this.props.navigation.navigate('EditProduct', {
+            id
+        });
+    };
+
     render() {
-        const { products } = this.state;
+        const products = this.filterForSearch(
+            this.props.products,
+            this.state.searchText
+        );
 
         return (
             <View style={styles.background}>
                 <SearchBar
+                    value={this.state.searchText}
                     onChange={this.onSearchChange}
-                    onClear={this.onClearText}
                     placeholder="Search products..."
                 />
                 <Listing
@@ -80,4 +87,4 @@ const mapStateToProps = (state: any) => ({
     products: state.products
 });
 
-export default connect(mapStateToProps)(withNavigation(ScreenView));
+export default withNavigation(connect(mapStateToProps)(ScreenView));
