@@ -12,16 +12,57 @@ type Props = {
     products: Products[];
 };
 
-class ScreenView extends React.Component<NavigationInjectedProps & Props> {
+type State = {
+    products: Products[];
+};
+
+class ScreenView extends React.Component<
+    NavigationInjectedProps & Props,
+    State
+> {
+    constructor(props: NavigationInjectedProps & Props) {
+        super(props);
+
+        this.state = {
+            products: props.products
+        };
+    }
+    onSearchChange = (text: string) => {
+        const { products } = this.props;
+
+        if (text.length) {
+            // filter products
+            const newProducts = products.filter(
+                (product) => product.name.toLowerCase() === text.toLowerCase()
+            );
+
+            this.setState({
+                products: newProducts
+            });
+        } else {
+            this.setState({
+                products
+            });
+        }
+    };
+    onClearText = () => {
+        this.setState({
+            products: this.props.products
+        });
+    };
     goToEditProductPage = () => {
         this.props.navigation.navigate('EditProduct');
     };
     render() {
-        const { products } = this.props;
+        const { products } = this.state;
 
         return (
             <View style={styles.background}>
-                <SearchBar placeholder="Search products..." />
+                <SearchBar
+                    onChange={this.onSearchChange}
+                    onClear={this.onClearText}
+                    placeholder="Search products..."
+                />
                 <Listing
                     items={products}
                     rightButton={{
