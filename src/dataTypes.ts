@@ -1,20 +1,20 @@
-export interface Products {
+export type Products = {
     name: string;
     id: string;
     price: number;
     quantity: number;
-}
+};
 
 export interface Sales {
     id: string;
     product_name: string;
     quantity_sold: number;
     date_sold: number;
-    ammount_paid: number;
+    amount_paid: number;
     change_remaining: number;
     on_credit: boolean;
     creditor_name?: string;
-    ammount_owing?: number;
+    amount_owing?: number;
 }
 
 export interface Creditors {
@@ -23,7 +23,7 @@ export interface Creditors {
     items_owing: Array<{
         product_id: string;
         name: string;
-        ammount_owing: number;
+        amount_owing: number;
         date_purchased: number;
     }>;
 }

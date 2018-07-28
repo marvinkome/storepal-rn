@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { View, Text, ScrollView, NativeSyntheticEvent } from 'react-native';
+import { withNavigation, NavigationInjectedProps } from 'react-navigation';
+import { View, Text, ScrollView, ToastAndroid } from 'react-native';
 import { Button } from 'react-native-elements';
 import uuid from 'uuid/v4';
 import { connect } from 'react-redux';
 
 import { Products } from '../../../dataTypes';
-import { addProduct } from '../../../store/actionCreators/products';
+import { addProduct } from '../../../store/actions';
 
 import AddNewForm from './form';
 import { viewStyles as styles } from './styles';
@@ -18,7 +19,10 @@ type State = {
     product: Products;
 };
 
-class ScreenView extends React.Component<Props, State> {
+class ScreenView extends React.Component<
+    Props & NavigationInjectedProps,
+    State
+> {
     constructor(props: any) {
         super(props);
 
@@ -55,6 +59,8 @@ class ScreenView extends React.Component<Props, State> {
         };
 
         this.props.addProducts(product);
+        ToastAndroid.show('Product added', ToastAndroid.SHORT);
+        this.props.navigation.goBack();
     };
     render() {
         return (
@@ -75,7 +81,9 @@ const mapDispatchToProps = (dispatch: any) => ({
     addProducts: (product: Products) => dispatch(addProduct(product))
 });
 
-export default connect(
-    null,
-    mapDispatchToProps
-)(ScreenView);
+export default withNavigation(
+    connect(
+        null,
+        mapDispatchToProps
+    )(ScreenView)
+);
