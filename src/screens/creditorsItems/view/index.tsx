@@ -1,27 +1,30 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { withNavigation, NavigationInjectedProps } from 'react-navigation';
 import { View, Text } from 'react-native';
 
+import { Creditors } from '../../../dataTypes';
 import Listing from '../../../components/listings';
 import { viewStyles as styles } from './styles';
 
-class ScreenView extends React.Component<NavigationInjectedProps> {
-    goToPayDebtsPage = () => {
-        this.props.navigation.navigate('PayDebt');
+type Props = {
+    creditors: Creditors[];
+};
+
+class ScreenView extends React.Component<NavigationInjectedProps & Props> {
+    goToPayDebtsPage = (productId: string) => {
+        const creditorName = this.props.navigation.getParam('name');
+        this.props.navigation.navigate('PayDebt', {
+            creditorName,
+            productId
+        });
     };
     render() {
-        const productData = [
-            {
-                name: 'Milk',
-                id: '0',
-                price: 100
-            },
-            {
-                name: 'Cheese',
-                id: '1',
-                price: 10
-            }
-        ];
+        const creditor = this.props.navigation.getParam('name');
+        const productData = this.props.creditors.filter(
+            (item) => item.name === creditor
+        )[0].items_owing;
+
         return (
             <View style={styles.background}>
                 <Listing
@@ -37,4 +40,8 @@ class ScreenView extends React.Component<NavigationInjectedProps> {
     }
 }
 
-export default withNavigation(ScreenView);
+const mapStateToProps = (state: any) => ({
+    creditors: state.creditors
+});
+
+export default connect(mapStateToProps)(withNavigation(ScreenView));

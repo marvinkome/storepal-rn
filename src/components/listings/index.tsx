@@ -1,15 +1,20 @@
 import * as React from 'react';
 import { View, Text } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
+import { formatDate } from '../../lib/helpers';
 import { viewStyles as styles } from './styles';
 
 type Prop = {
     items: Array<{
-        id: string;
         name: string;
-        price: number;
+        product_id?: string;
+        amount_owing?: number;
+        date_purchased?: number;
+        id?: string;
+        price?: number;
         quantity?: number;
-        date?: string;
+        total_ammount_owing?: number;
+        items_owing?: any[];
     }>;
     rightButton?: {
         title: string;
@@ -22,7 +27,6 @@ const ShowSubtitle = (item: {
     type: 'product' | 'creditor' | 'creditor-item';
     price: number;
     quantity?: number;
-    date?: string;
 }) => {
     if (item.type === 'product') {
         return (
@@ -39,9 +43,11 @@ const ShowSubtitle = (item: {
             </React.Fragment>
         );
     } else {
+        const date = formatDate(item.quantity || 0);
         return (
             <React.Fragment>
-                <Text>Owing: ${item.price}</Text>
+                <Text>Owing: ${item.price},</Text>
+                <Text style={styles.quantityText}>On: {date}</Text>
             </React.Fragment>
         );
     }
@@ -49,31 +55,45 @@ const ShowSubtitle = (item: {
 
 export const Listing = ({ items, rightButton, type }: Prop) => {
     const renderItems = () => {
-        return items.map((item) => {
-            return (
-                <ListItem
-                    key={item.id}
-                    title={item.name}
-                    titleStyle={styles.title}
-                    rightIcon={
-                        rightButton ? (
-                            <Button
-                                title={rightButton.title}
-                                onPress={() => rightButton.onPress(item.id)}
-                                buttonStyle={styles.editButton}
-                                textStyle={styles.editButtonText}
-                            />
-                        ) : (
-                            <Text />
+        return items.map((item, index) => {
+            const name = item.name;
+            const price =
+                item.price ||
+                item.total_ammount_owing ||
+                item.amount_owing ||
+                0;
+            const quantity =
+                item.quantity ||
+                (item.items_owing ? item.items_owing.length : 0) ||
+                item.date_purchased ||
+                0;
+            const rightBtn = rightButton ? (
+                <Button
+                    title={rightButton.title}
+                    onPress={() =>
+                        rightButton.onPress(
+                            item.id || item.product_id || item.name
                         )
                     }
+                    buttonStyle={styles.editButton}
+                    textStyle={styles.editButtonText}
+                />
+            ) : (
+                <Text />
+            );
+
+            return (
+                <ListItem
+                    key={index}
+                    title={name}
+                    titleStyle={styles.title}
+                    rightIcon={rightBtn}
                     subtitle={
                         <View style={styles.subtitleContainer}>
                             <ShowSubtitle
                                 type={type}
-                                price={item.price}
-                                quantity={item.quantity}
-                                date={item.date}
+                                price={price}
+                                quantity={quantity}
                             />
                         </View>
                     }
@@ -95,7 +115,7 @@ export const Listing = ({ items, rightButton, type }: Prop) => {
 
         return (
             <ListItem
-                title="You have no products yet"
+                title={title}
                 titleStyle={styles.title}
                 rightIcon={<Text />}
             />

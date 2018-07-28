@@ -5,7 +5,7 @@ export type Products = {
     quantity: number;
 };
 
-export interface Sales {
+export type Sales = {
     id: string;
     product_name: string;
     quantity_sold: number;
@@ -15,9 +15,9 @@ export interface Sales {
     on_credit: boolean;
     creditor_name?: string;
     amount_owing?: number;
-}
+};
 
-export interface Creditors {
+export type Creditors = {
     name: string;
     total_ammount_owing: number;
     items_owing: Array<{
@@ -26,10 +26,10 @@ export interface Creditors {
         amount_owing: number;
         date_purchased: number;
     }>;
-}
+};
 
-export interface Store {
+export type Store = {
     products: Products[];
     creditors: Creditors[];
     sales: Sales[];
-}
+};

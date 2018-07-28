@@ -152,7 +152,7 @@ class ScreenView extends React.Component<
             }
 
             this.props.sellProduct(sale);
-            ToastAndroid.show('Sale has been recorder', ToastAndroid.SHORT);
+            ToastAndroid.show('Sale has been recorded', ToastAndroid.SHORT);
             this.props.navigation.goBack();
         } else {
             ToastAndroid.show('No Product was selected', ToastAndroid.LONG);
@@ -169,9 +169,6 @@ class ScreenView extends React.Component<
 
         return (
             <ScrollView style={styles.container}>
-                <View style={styles.headerContainer}>
-                    <Text style={styles.headerText}>Sale ID: 12-45</Text>
-                </View>
                 <AddNewForm
                     productNameValidation={this.state.product_error}
                     quantityValidation={this.state.quantity_error}

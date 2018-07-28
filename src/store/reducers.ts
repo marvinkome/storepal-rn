@@ -1,6 +1,11 @@
 import { Creditors } from './../dataTypes';
 import { Store, Products, Sales } from '../dataTypes';
-import { ADD_PRODUCT, SELL_PRODUCT, EDIT_PRODUCT } from './actionsTypes';
+import {
+    ADD_PRODUCT,
+    SELL_PRODUCT,
+    EDIT_PRODUCT,
+    PAY_DEBT
+} from './actionsTypes';
 import initState from './initState';
 
 const updateItemInArray = (
@@ -89,16 +94,40 @@ function sellProductReducer(store: Store, payload: Sales): Store {
             creditors = updateItemInArray(
                 store.creditors,
                 creditor[0].name,
-                (item: Creditors): Creditors => ({
-                    ...item,
-                    total_ammount_owing: item.total_ammount_owing + amountOwing,
-                    items_owing: item.items_owing.concat({
-                        product_id: payload.id,
-                        name: payload.product_name,
-                        amount_owing: amountOwing,
-                        date_purchased: payload.date_sold
-                    })
-                }),
+                (item: Creditors): Creditors => {
+                    // check if product already already exists
+                    const itemsOwing = item.items_owing.filter(
+                        (i) => i.product_id === payload.id
+                    );
+
+                    let newItemList;
+                    if (itemsOwing.length) {
+                        // item already exists
+                        newItemList = updateItemInArray(
+                            item.items_owing,
+                            payload.id,
+                            (it) => ({
+                                ...it,
+                                amount_owing: it.amount_owing + amountOwing
+                            }),
+                            'product_id'
+                        );
+                    } else {
+                        newItemList = item.items_owing.concat({
+                            product_id: payload.id,
+                            name: payload.product_name,
+                            amount_owing: amountOwing,
+                            date_purchased: Date.now()
+                        });
+                    }
+
+                    return {
+                        ...item,
+                        total_ammount_owing:
+                            item.total_ammount_owing + amountOwing,
+                        items_owing: newItemList
+                    };
+                },
                 'name'
             );
         } else {
@@ -129,6 +158,39 @@ function sellProductReducer(store: Store, payload: Sales): Store {
     return newStore;
 }
 
+function payDebtReducer(
+    store: Store,
+    payload: {
+        product_id: string;
+        creditor: string;
+        amount_paid: number;
+    }
+): Store {
+    const creditors = updateItemInArray(
+        store.creditors,
+        payload.creditor,
+        (item: Creditors): Creditors => ({
+            ...item,
+            total_ammount_owing: item.total_ammount_owing - payload.amount_paid,
+            items_owing: updateItemInArray(
+                item.items_owing,
+                payload.product_id,
+                (itemOwing: any) => ({
+                    ...itemOwing,
+                    amount_owing: itemOwing.amount_owing - payload.amount_paid
+                }),
+                'product_id'
+            )
+        }),
+        'name'
+    );
+
+    return {
+        ...store,
+        creditors
+    };
+}
+
 type actionType = { type: string; payload?: any };
 const rootReducer = (state = initState, action: actionType) => {
     switch (action.type) {
@@ -138,6 +200,8 @@ const rootReducer = (state = initState, action: actionType) => {
             return editProductInStore(state, action.payload);
         case SELL_PRODUCT:
             return sellProductReducer(state, action.payload);
+        case PAY_DEBT:
+            return payDebtReducer(state, action.payload);
         default:
             return state;
     }
