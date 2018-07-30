@@ -45,6 +45,15 @@ class ScreenView extends React.Component<
         });
     };
 
+    renderSubtitle = (style: any, owing: number, itemsCount: number) => {
+        return (
+            <View style={style.container}>
+                <Text>Items: {itemsCount}</Text>
+                <Text style={style.text}>Owing: ${owing}</Text>
+            </View>
+        );
+    };
+
     render() {
         const data = this.filterForSearch(
             this.props.creditors,
@@ -59,6 +68,7 @@ class ScreenView extends React.Component<
                     placeholder="Search creditors..."
                 />
                 <Listing
+                    subtitle={this.renderSubtitle}
                     items={data}
                     rightButton={{
                         title: 'View Items',

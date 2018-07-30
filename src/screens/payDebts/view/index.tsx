@@ -42,7 +42,7 @@ class ScreenView extends React.Component<P & NavigationInjectedProps, S> {
             amount_paid
         });
 
-        this.props.navigation.goBack();
+        this.props.navigation.navigate('Creditors');
     };
 
     render() {

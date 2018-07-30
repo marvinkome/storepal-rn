@@ -3,12 +3,14 @@ import { NavigationInjectedProps, withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import { View, Text, ToastAndroid } from 'react-native';
 
+import { deleteProduct } from '../../../store/actions';
 import { Products } from '../../../dataTypes';
 import Listing from '../../../components/listings';
 import SearchBar from '../../../components/searchBar';
 import { viewStyles as styles } from './styles';
 
 type Props = {
+    deleteProduct: (id: string) => void;
     products: Products[];
 };
 
@@ -57,6 +59,20 @@ class ScreenView extends React.Component<
         });
     };
 
+    deleteItem = (id: string) => {
+        this.props.deleteProduct(id);
+        ToastAndroid.show('Item deleted', ToastAndroid.LONG);
+    };
+
+    renderSubtitle = (style: any, price: number, quantity: number) => {
+        return (
+            <View style={style.container}>
+                <Text>Price: ${price}</Text>
+                <Text style={style.text}>Qty: {quantity}</Text>
+            </View>
+        );
+    };
+
     render() {
         const products = this.filterForSearch(
             this.props.products,
@@ -71,12 +87,15 @@ class ScreenView extends React.Component<
                     placeholder="Search products..."
                 />
                 <Listing
+                    subtitle={this.renderSubtitle}
                     items={products}
+                    type="product"
+                    deleteAble={true}
+                    onSwipe={this.deleteItem}
                     rightButton={{
                         title: 'Edit',
                         onPress: this.goToEditProductPage
                     }}
-                    type="product"
                 />
             </View>
         );
@@ -87,4 +106,13 @@ const mapStateToProps = (state: any) => ({
     products: state.products
 });
 
-export default withNavigation(connect(mapStateToProps)(ScreenView));
+const mapDispatchToProps = (dispatch: any) => ({
+    deleteProduct: (id: any) => dispatch(deleteProduct(id))
+});
+
+export default withNavigation(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(ScreenView)
+);

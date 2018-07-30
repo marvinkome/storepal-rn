@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withNavigation, NavigationInjectedProps } from 'react-navigation';
 import { View, Text } from 'react-native';
 
+import { formatDate } from '../../../lib/helpers';
 import { Creditors } from '../../../dataTypes';
 import Listing from '../../../components/listings';
 import { viewStyles as styles } from './styles';
@@ -19,16 +20,28 @@ class ScreenView extends React.Component<NavigationInjectedProps & Props> {
             productId
         });
     };
+
+    renderSubtitle = (style: any, amountOwing: number, date: number) => {
+        return (
+            <View style={style.container}>
+                <Text>Owing: ${amountOwing},</Text>
+                <Text style={style.text}>On: {formatDate(date)}</Text>
+            </View>
+        );
+    };
+
     render() {
         const creditor = this.props.navigation.getParam('name');
-        const productData = this.props.creditors.filter(
+        const product = this.props.creditors.filter(
             (item) => item.name === creditor
-        )[0].items_owing;
+        )[0];
+        const productData = product ? product.items_owing : null;
 
         return (
             <View style={styles.background}>
                 <Listing
-                    items={productData}
+                    subtitle={this.renderSubtitle}
+                    items={productData || undefined}
                     rightButton={{
                         title: 'Paid',
                         onPress: this.goToPayDebtsPage

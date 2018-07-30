@@ -2,7 +2,8 @@ import {
     ADD_PRODUCT,
     SELL_PRODUCT,
     EDIT_PRODUCT,
-    PAY_DEBT
+    PAY_DEBT,
+    DELETE_PRODUCT
 } from './actionsTypes';
 import { Products, Sales } from '../dataTypes';
 
@@ -19,6 +20,11 @@ type editPayloadType = {
 export const editProduct = (productData: editPayloadType) => ({
     type: EDIT_PRODUCT,
     payload: productData
+});
+
+export const deleteProduct = (id: string) => ({
+    type: DELETE_PRODUCT,
+    payload: id
 });
 
 export const sellProduct = (sale: Sales) => ({

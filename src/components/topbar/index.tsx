@@ -15,6 +15,7 @@ const TopBar = ({ pageTitle }: Props) => {
 
     return (
         <Header
+            rightComponent={{ text: 'Items out of stock', style: styles.text }}
             centerComponent={centerComponent}
             outerContainerStyles={styles.header}
         />

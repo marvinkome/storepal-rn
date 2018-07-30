@@ -4,7 +4,7 @@ import { View, Text, ScrollView, ToastAndroid } from 'react-native';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
 
-import { sellProduct } from '../../../store/actionCreators/products';
+import { sellProduct } from '../../../store/actions';
 import { Products, Sales } from '../../../dataTypes';
 import AddNewForm from './form';
 import { viewStyles as styles } from './styles';
