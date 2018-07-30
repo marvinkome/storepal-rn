@@ -106,7 +106,7 @@ class ScreenView extends React.Component<
             credit_checked: !this.state.credit_checked
         });
     };
-    onPress = () => {
+    onBtnPress = () => {
         const {
             product_name,
             product_error,
@@ -179,7 +179,7 @@ class ScreenView extends React.Component<
                 />
                 <Button
                     title="Add"
-                    onPress={this.onPress}
+                    onPress={this.onBtnPress}
                     buttonStyle={styles.button}
                     textStyle={styles.buttonText}
                 />

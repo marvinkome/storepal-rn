@@ -1,73 +1,78 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Text, View } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 
+import { Sales } from '../../../dataTypes';
 import { Record, CreditRecord } from './records';
 import { viewStyle as styles } from './styles';
 
-type state = {
+type Props = {
+    sales: Sales[];
+};
+
+type State = {
     selectedIndex: number;
 };
 
-export default class ScreenView extends React.Component<{}, state> {
+class ScreenView extends React.Component<Props, State> {
     constructor(props: any) {
         super(props);
 
         this.state = {
-            selectedIndex: 0,
+            selectedIndex: 0
         };
     }
     changeIndex = (index: number) => {
         this.setState({
-            selectedIndex: index,
+            selectedIndex: index
         });
     };
+    showNoItem = () => {
+        return (
+            <View style={styles.showNoItems}>
+                <Text>No data available</Text>
+            </View>
+        );
+    };
     showNormalRecords = () => {
-        const recordData = [
-            {
-                item: 'Ford Ranger',
-                quantity: 4,
-                date: 'Fri Mar 4 2018',
-                recieved: 20,
-            },
-            {
-                item: 'Cheese',
-                quantity: 2,
-                date: 'Fri Mar 4 2018',
-                recieved: 20,
-            },
-            {
-                item: 'Milk',
-                quantity: 1,
-                date: 'Fri Mar 4 2018',
-                recieved: 20,
-            },
-        ];
+        const record = this.props.sales.reduce((total: any[], item) => {
+            if (!item.on_credit) {
+                total.push({
+                    item: item.product_name,
+                    quantity: item.quantity_sold,
+                    date: item.date_sold,
+                    recieved: item.amount_paid
+                });
+            }
 
-        return recordData.map((data, index) => (
-            <Record key={index} data={data} />
-        ));
+            return total;
+        }, []);
+
+        return record.length
+            ? record.map((data, index) => <Record key={index} data={data} />)
+            : this.showNoItem();
     };
     showCreditRecords = () => {
-        const recordData = [
-            {
-                item: 'Ford Ranger',
-                quantity: 4,
-                date: 'Fri Mar 4 2018',
-                creditor: 'Rachel',
-                amountOwing: 50,
-            },
-            {
-                item: 'Milk',
-                quantity: 4,
-                date: 'Fri Mar 4 2018',
-                creditor: 'John',
-                amountOwing: 30,
-            },
-        ];
-        return recordData.map((data, index) => (
-            <CreditRecord key={index} data={data} />
-        ));
+        const record = this.props.sales.reduce((total: any[], item) => {
+            if (item.on_credit) {
+                total.push({
+                    item: item.product_name,
+                    quantity: item.quantity_sold,
+                    date: item.date_sold,
+                    creditor: item.creditor_name,
+                    amountOwing: item.amount_owing
+                });
+            }
+
+            return total;
+        }, []);
+
+        return record.length
+            ? record.map((data, index) => (
+                  <CreditRecord key={index} data={data} />
+              ))
+            : this.showNoItem();
     };
     render() {
         const buttons = ['Product Sold', 'Products sold on credit'];
@@ -87,3 +92,9 @@ export default class ScreenView extends React.Component<{}, state> {
         );
     }
 }
+
+const mapStateToProps = (state: any) => ({
+    sales: state.sales
+});
+
+export default connect(mapStateToProps)(ScreenView);

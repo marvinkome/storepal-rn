@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
 import { Card } from 'react-native-elements';
+
+import { formatDate } from '../../../lib/helpers';
 import { recordStyle as styles } from './styles';
 
 type recordCardProp = {
     data: {
         item: string;
         quantity: number;
-        date: string;
+        date: number;
     };
     secondaryElem: JSX.Element;
 };
@@ -16,7 +18,7 @@ type recordProp = {
     data: {
         item: string;
         quantity: number;
-        date: string;
+        date: number;
         recieved: number;
         change?: number;
     };
@@ -26,7 +28,7 @@ type creditRecordProp = {
     data: {
         item: string;
         quantity: number;
-        date: string;
+        date: number;
         creditor: string;
         amountOwing: number;
     };
@@ -42,7 +44,7 @@ const RecordCard = ({ data, secondaryElem }: recordCardProp) => {
         >
             <View>
                 <Text style={styles.secondaryText}>
-                    Sold {data.quantity}pcs on {data.date}
+                    Sold {data.quantity}pcs on {formatDate(data.date)}
                 </Text>
                 {secondaryElem}
             </View>

@@ -18,6 +18,7 @@ function updateItemInArray(
     const updatedItems = array.reduce((total: any[], item: any) => {
         if (item[key] !== itemId) {
             total.push(item);
+            return total;
         }
 
         const { item: updatedItem, deleteItem } = callback(item);

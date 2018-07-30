@@ -8,6 +8,13 @@ export const viewStyle = StyleSheet.create({
     },
     btnContainer: {
         height: 30
+    },
+    showNoItems: {
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        marginTop: 10,
+        paddingTop: 30,
+        paddingBottom: 30
     }
 });
 

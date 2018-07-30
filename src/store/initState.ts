@@ -2,13 +2,13 @@ const initData = {
     products: [
         {
             name: 'Milk',
-            id: 'adbc',
+            id: '0',
             price: 10,
             quantity: 40
         },
         {
             name: 'Cheese',
-            id: 'abcd',
+            id: '1',
             price: 10,
             quantity: 0
         }
