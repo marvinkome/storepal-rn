@@ -1,9 +1,10 @@
 import { color } from '../constants/index';
 import moment from 'moment';
 
-export const getHeaderSettings = (title: string) => {
+export function getHeaderSettings(title: string) {
     const newTitle = title.toUpperCase();
-    const headerOptions = {
+
+    return {
         title: newTitle,
         headerStyle: {
             backgroundColor: '#fff',
@@ -19,9 +20,7 @@ export const getHeaderSettings = (title: string) => {
             fontWeight: '500'
         }
     };
-
-    return headerOptions;
-};
+}
 
 export const formatDate = (date: number) => {
     return moment(date).format('DD/MM/YY');

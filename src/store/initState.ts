@@ -5,6 +5,12 @@ const initData = {
             id: 'adbc',
             price: 10,
             quantity: 40
+        },
+        {
+            name: 'Cheese',
+            id: 'abcd',
+            price: 10,
+            quantity: 0
         }
     ],
     creditors: [
