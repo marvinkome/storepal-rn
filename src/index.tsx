@@ -6,8 +6,9 @@ import {
     createStackNavigator
 } from 'react-navigation';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
-import store from './store';
+import { store, persistor } from './store';
 
 import Home from './screens/home';
 import Products from './screens/products';
@@ -87,10 +88,12 @@ const Navigation = createBottomTabNavigator(
 
 const App = () => (
     <Provider store={store}>
-        <View style={{ flex: 1 }}>
-            <StatusBar backgroundColor={color.light} translucent={true} />
-            <Navigation />
-        </View>
+        <PersistGate persistor={persistor}>
+            <View style={{ flex: 1 }}>
+                <StatusBar backgroundColor={color.light} translucent={true} />
+                <Navigation />
+            </View>
+        </PersistGate>
     </Provider>
 );
 

@@ -1,4 +1,6 @@
 import { createStore, applyMiddleware } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import reducer from './reducers';
 
 const logger = (state: any) => (next: any) => (action: any) => {
@@ -8,10 +10,12 @@ const logger = (state: any) => (next: any) => (action: any) => {
     return result;
 };
 
-const store = createStore(
-    // @ts-ignore
-    reducer
-    // applyMiddleware(logger)
-);
+const persistConfig = {
+    key: 'root',
+    storage
+};
 
-export default store;
+// @ts-ignore
+const persistedReducer = persistReducer(persistConfig, reducer);
+export const store = createStore(persistedReducer);
+export const persistor = persistStore(store);
