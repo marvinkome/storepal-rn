@@ -1,5 +1,4 @@
 import * as React from 'react';
-import SplashScreen from 'react-native-splash-screen';
 import { StatusBar, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import {
@@ -88,10 +87,6 @@ const Navigation = createBottomTabNavigator(
 );
 
 class MainApp extends React.Component {
-    componentDidMount() {
-        SplashScreen.hide();
-    }
-
     render() {
         return (
             <Provider store={store}>

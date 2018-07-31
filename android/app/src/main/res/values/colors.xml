@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Change the color value for your need -->
-    <color name="primary_dark">#4F6D7A</color>
-    <color name="white">#AEDBE5</color>
     <color name="colorPrimary">#AEDBE5</color>
     <color name="colorPrimaryDark">#AEDBE5</color>
     <color name="colorAccent">#AEDBE5</color>
