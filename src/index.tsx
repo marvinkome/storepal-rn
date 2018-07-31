@@ -1,4 +1,5 @@
 import * as React from 'react';
+import SplashScreen from 'react-native-splash-screen';
 import { StatusBar, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import {
@@ -86,15 +87,26 @@ const Navigation = createBottomTabNavigator(
     }
 );
 
-const App = () => (
-    <Provider store={store}>
-        <PersistGate persistor={persistor}>
-            <View style={{ flex: 1 }}>
-                <StatusBar backgroundColor={color.light} translucent={true} />
-                <Navigation />
-            </View>
-        </PersistGate>
-    </Provider>
-);
+class MainApp extends React.Component {
+    componentDidMount() {
+        SplashScreen.hide();
+    }
 
-export default App;
+    render() {
+        return (
+            <Provider store={store}>
+                <PersistGate persistor={persistor}>
+                    <View style={{ flex: 1 }}>
+                        <StatusBar
+                            backgroundColor={color.light}
+                            translucent={true}
+                        />
+                        <Navigation />
+                    </View>
+                </PersistGate>
+            </Provider>
+        );
+    }
+}
+
+export default MainApp;
